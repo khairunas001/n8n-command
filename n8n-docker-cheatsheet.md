@@ -18,6 +18,28 @@ Panduan singkat untuk menjalankan, menghentikan, dan mengelola **n8n** menggunak
 | **Hapus container**                 | `docker rm n8n` | `docker rm n8n` |
 | **Hapus + buat ulang container**    | `docker rm -f n8n && docker run -d --name n8n -p 5678:5678 -v C:\Users\<USERNAME>\.n8n:/home/node/.n8n n8nio/n8n` | `docker rm -f n8n && docker run -d --name n8n -p 5678:5678 -v ~/.n8n:/home/node/.n8n n8nio/n8n` |
 
+# n8n User Management Reset Commands
+
+Berikut adalah perbedaan command untuk reset user/email/password di **Linux** dan **Windows (PowerShell / CMD)**.
+
+| OS / Shell | Command |
+|------------|----------|
+| **Linux / MacOS (bash/zsh)** | ```bash<br>docker exec -it n8n /bin/sh<br>n8n user-management:reset --email admin@example.com --password "Rahasia123"<br>``` |
+| **Windows PowerShell** | ```powershell<br>docker exec -it n8n sh<br>n8n user-management:reset --email admin@example.com --password "Rahasia123"<br>``` |
+| **Windows CMD** | ```cmd<br>docker exec -it n8n sh<br>n8n user-management:reset --email admin@example.com --password "Rahasia123"<br>``` |
+
+## Catatan
+- Gunakan `n8n user-management:reset` (pakai titik dua `:`), bukan spasi.  
+- Pastikan image yang digunakan adalah **n8nio/n8n versi terbaru** (`>=1.0.0`), karena fitur ini tidak tersedia di versi lama.  
+- Jika muncul error `Command "user-management" not found`, lakukan update image:  
+  ```bash
+  docker pull n8nio/n8n:latest
+  docker stop n8n
+  docker rm n8n
+  docker run -d --name n8n -p 5678:5678 -v C:\Users\<USER>\.n8n:/home/node/.n8n n8nio/n8n:latest
+
+
+
 ---
 
 ## 📂 Catatan Path
@@ -28,6 +50,8 @@ Panduan singkat untuk menjalankan, menghentikan, dan mengelola **n8n** menggunak
   ```
 
 - **Linux/Mac**: default menggunakan home directory `~/.n8n`.
+
+
 
 ---
 
@@ -50,5 +74,7 @@ Setelah container berjalan, buka di browser:
   ```bash
   docker ps -a
   ```
+
+
 
 ---
